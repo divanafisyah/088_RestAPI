@@ -2,9 +2,9 @@ package com.example.kontak.ui.home.screen
 
 import com.example.kontak.navigation.DestinasiNavigasi
 
-object DetailsDestination : DestinasiNavigasi{
-    override val route = "item_details"
-    override val titleRes = "Detail Kontak"
+object EditDestination : DestinasiNavigasi{
+    override val route = "edit"
+    override val titleRes = "Edit Kontak"
     const val kontakId = "itemId"
     val routeWithArgs = "$route/{$kontakId"
 }
