@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class EditViewModel (
     savedStateHandle: SavedStateHandle,
-    private val kontakRepository: KontakRepositori
+    private val kontakRepositori: KontakRepositori
 ) : ViewModel(){
     var editKontakState by mutableStateOf(InsertUiState())
         private set
@@ -20,7 +20,21 @@ class EditViewModel (
 
     init {
         viewModelScope.launch {
-            editKontakState = kontakRepository.getKontakById(kontakId).toUiStateKontak()
+            editKontakState = kontakRepositori.getKontakById(kontakId).toUiStateKontak()
+        }
+    }
+
+    fun updateInsertKontakState(insertUiEvent: InsertUiEvent){
+        editKontakState = InsertUiState(insertUiEvent = insertUiEvent)
+    }
+
+    suspend fun updateKontak(){
+        viewModelScope.launch {
+            try{
+                kontakRepositori.updateKontak(kontakId, editKontakState.insertUiEvent.toKontak())
+            } catch (e: Exception){
+                e.printStackTrace()
+            }
         }
     }
 }
